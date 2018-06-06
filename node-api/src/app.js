@@ -1,16 +1,20 @@
-var app = require('express') ();
+'use strict'
 
+const app = require('express') ();
+const bodyParser = require('body-parser');
+const routes = require('./routes');
+const PORT = 3000;
 
-app.get('/',(req,res)=> {
-    res.send('test');
-})
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(routes);
 
-app.listen(8080,(err) => {
+app.listen(PORT,(err) => {
     if(err)
     {
         console.err(err);
         process.exit(-1);
     }
-    console.log('listening to port 8080')
+    console.log('listening to port ' + PORT)
         
 })
