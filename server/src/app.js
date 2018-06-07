@@ -3,10 +3,13 @@
 const app = require('express') ();
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const PORT = 3000;
+const Cors = require('cors');
+const PORT = 5000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(Cors());
+
 app.use(routes);
 
 app.listen(PORT,(err) => {
