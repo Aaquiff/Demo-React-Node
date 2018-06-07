@@ -14,32 +14,42 @@ export default class Books extends Component {
     }
 
     componentDidMount() {
-        this.getAllUsers();
+        this.getAllBooks();
     }
 
-    getAllUsers() {
+    getAllBooks() {
         axios.get('http://localhost:5000/books').then((res)=> {
             this.setState({
                 books: res.data.data || res.data
-            })
-            console.log(res.data)
+            });
         })
+    }
+
+    addBook(book) {
+        axios.post('http://localhost:5000/books',book).then((res)=>{
+            this.getAllBooks();
+        });
+
     }
 
     render() {
         return <div>
-            <AddBooks></AddBooks>
+            <AddBooks addBook={user=> this.addBook(user)}></AddBooks>
             <div>
                 <p>Books ({this.state.books.length})</p>
                 <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>ISBN</th>
-                        <th>Author</th>
-                        <th>Price</th>
-                        <th>Year of publication</th>
-                        <th>Publisher</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>ISBN</th>
+                            <th>Author</th>
+                            <th>Price</th>
+                            <th>Year of publication</th>
+                            <th>Publisher</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
                     {
                         this.state.books.map((book)=>{
                             return <tr key={book.Name}>
@@ -52,6 +62,7 @@ export default class Books extends Component {
                             </tr>
                         })
                     }
+                    </tbody>
                 </table>
             </div>
         </div>
